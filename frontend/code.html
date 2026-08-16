@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AI Skin Specialist</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#007BA7",
+            primaryDark: "#006184",
+            success: "#008577",
+            surface: "#FFFFFF",
+            background: "#F9F9F9",
+            outline: "#E2E8F0",
+            ink: "#1A1A1A",
+            bodyText: "#475569",
+            muted: "#64748B"
+          },
+
+          fontFamily: {
+            inter: ["Inter", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #F9F9F9;
+      color: #475569;
+      font-family: Inter, sans-serif;
+    }
+
+    .card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+    }
+
+    .dropzone {
+      transition:
+        border-color 0.18s ease,
+        background-color 0.18s ease;
+    }
+
+    .dropzone.dragging {
+      border-color: #007BA7 !important;
+      background: #F2FBFE !important;
+    }
+
+    .recording {
+      border-color: #007BA7 !important;
+      color: #007BA7 !important;
+      box-shadow: 0 0 0 7px rgba(0, 123, 167, 0.09);
+    }
+
+    .pulse {
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      50% {
+        transform: scale(1.05);
+        opacity: 0.75;
+      }
+    }
+
+    .spin {
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-[#E2E8F0]">
+
+  <div class="max-w-[1200px] mx-auto h-[72px] px-4 md:px-12 flex items-center">
+
+    <div class="flex items-center gap-3">
+
+      <div class="w-9 h-9 rounded-lg bg-[#007BA7] text-white flex items-center justify-center">
+        <span class="material-symbols-outlined">
+          dermography
+        </span>
+      </div>
+
+      <div class="font-semibold text-[18px] text-[#1A1A1A]">
+        AI Skin Specialist
+      </div>
+
+    </div>
+
+
+    <nav class="hidden lg:flex ml-16 gap-8 text-[13px]">
+
+      <a href="#" class="font-semibold text-[#007BA7]">
+        Dashboard
+      </a>
+
+      <a href="#" class="text-[#64748B] hover:text-[#007BA7]">
+        Patient Records
+      </a>
+
+      <a href="#" class="text-[#64748B] hover:text-[#007BA7]">
+        Dermatology Database
+      </a>
+
+      <a href="#" class="text-[#64748B] hover:text-[#007BA7]">
+        Research
+      </a>
+
+    </nav>
+
+
+    <div class="ml-auto flex items-center gap-4">
+
+      <span class="material-symbols-outlined text-[#64748B]">
+        notifications
+      </span>
+
+      <span class="material-symbols-outlined text-[#64748B]">
+        settings
+      </span>
+
+      <div
+        class="w-9 h-9 rounded-full bg-[#E8F7FB]
+               border border-[#B8E5F1]
+               text-[#007BA7]
+               flex items-center justify-center
+               text-xs font-semibold"
+      >
+        AI
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<main class="max-w-[1200px] mx-auto px-4 md:px-12 py-10 md:py-12">
+
+
+  <!-- HERO -->
+
+  <section class="text-center max-w-3xl mx-auto mb-10">
+
+    <h1
+      class="text-[36px] md:text-[48px]
+             leading-tight font-semibold
+             tracking-tight text-[#1A1A1A]"
+    >
+      AI Skin Specialist
+    </h1>
+
+    <p
+      class="mt-4 text-[15px] md:text-[16px]
+             leading-6 text-[#475569]"
+    >
+      Multimodal AI analysis combining voice,
+      visual imagery, and clinical descriptions
+      to provide general health information.
+    </p>
+
+    <div
+      class="mt-4 inline-flex items-center gap-2
+             px-3 py-1.5 rounded-full
+             bg-[#ECFDF9]
+             border border-[#B8ECE1]
+             text-[#008577]
+             text-xs font-medium"
+    >
+
+      <span class="w-2 h-2 rounded-full bg-[#008577]"></span>
+
+      AI assistant ready
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       WORKSPACE
+       ======================================================= -->
+
+  <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+
+    <!-- =====================================================
+         LEFT COLUMN
+         ===================================================== -->
+
+    <div class="lg:col-span-5 space-y-4">
+
+
+      <!-- VOICE INPUT -->
+
+      <div class="card p-6">
+
+        <div class="border-b border-[#E2E8F0] pb-3 mb-5">
+
+          <h2 class="text-xl text-[#1A1A1A] font-medium">
+            Voice Input
+          </h2>
+
+          <p class="mt-1 text-xs text-[#64748B]">
+            Describe your skin concern using your voice.
+          </p>
+
+        </div>
+
+
+        <div class="flex flex-col items-center text-center">
+
+          <button
+            id="recordButton"
+            type="button"
+            aria-label="Start voice recording"
+            class="w-20 h-20 rounded-full
+                   bg-white
+                   border border-[#E2E8F0]
+                   flex items-center justify-center
+                   hover:border-[#007BA7]
+                   transition-all"
+          >
+
+            <span
+              id="recordIcon"
+              class="material-symbols-outlined
+                     text-[34px]
+                     text-[#475569]"
+            >
+              mic
+            </span>
+
+          </button>
+
+
+          <div
+            id="recordStatus"
+            class="mt-3 text-sm
+                   font-medium text-[#475569]"
+          >
+            Start recording
+          </div>
+
+
+          <div
+            id="recordTimer"
+            class="mt-1 text-xs text-[#94A3B8]"
+          >
+            00:00
+          </div>
+
+
+          <input
+            id="audioInput"
+            type="file"
+            accept="audio/*"
+            hidden
+          >
+
+
+          <button
+            id="audioUploadButton"
+            type="button"
+            class="mt-4 text-sm
+                   font-medium text-[#007BA7]
+                   hover:text-[#005c7a]"
+          >
+            Or upload an audio file
+          </button>
+
+
+          <audio
+            id="patientAudioPreview"
+            controls
+            class="hidden w-full mt-4"
+          ></audio>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- IMAGE INPUT -->
+
+      <div class="card p-6">
+
+        <div class="border-b border-[#E2E8F0] pb-3 mb-4">
+
+          <h2 class="text-xl text-[#1A1A1A] font-medium">
+            Upload Skin Image
+          </h2>
+
+          <p class="mt-1 text-xs text-[#64748B]">
+            Use a clear, well-lit image of the affected area.
+          </p>
+
+        </div>
+
+
+        <input
+          id="imageInput"
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+          hidden
+        >
+
+
+        <div
+          id="imageDropzone"
+          tabindex="0"
+          class="dropzone
+                 border-2 border-dashed
+                 border-[#CBD5E1]
+                 rounded-lg
+                 min-h-[180px]
+                 p-6
+                 flex flex-col
+                 items-center
+                 justify-center
+                 text-center
+                 cursor-pointer
+                 bg-[#FBFCFD]"
+        >
+
+          <span
+            class="material-symbols-outlined
+                   text-[34px]
+                   text-[#64748B]"
+          >
+            add_a_photo
+          </span>
+
+
+          <p
+            id="imageUploadLabel"
+            class="mt-2 text-sm
+                   font-medium text-[#1A1A1A]"
+          >
+            Drag and drop or click to upload
+          </p>
+
+
+          <p class="mt-1 text-xs text-[#64748B]">
+            High-resolution JPG, PNG, or WEBP
+          </p>
+
+        </div>
+
+
+        <div
+          id="imagePreviewWrap"
+          class="hidden mt-4
+                 border border-[#E2E8F0]
+                 rounded-lg overflow-hidden"
+        >
+
+          <img
+            id="imagePreview"
+            class="w-full max-h-64 object-cover"
+            alt="Selected skin image"
+          >
+
+
+          <button
+            id="removeImageButton"
+            type="button"
+            class="w-full py-2
+                   text-xs text-[#64748B]
+                   border-t border-[#E2E8F0]"
+          >
+            Remove image
+          </button>
+
+        </div>
+
+
+        <button
+          id="takePhotoButton"
+          type="button"
+          class="mt-3 w-full
+                 py-2.5
+                 rounded-lg
+                 border border-[#E2E8F0]
+                 bg-white
+                 text-[#1A1A1A]
+                 text-sm
+                 font-medium
+                 flex items-center
+                 justify-center gap-2"
+        >
+
+          <span class="material-symbols-outlined text-[19px]">
+            photo_camera
+          </span>
+
+          Take Photo
+
+        </button>
+
+      </div>
+
+
+
+      <!-- ANALYZE -->
+
+      <button
+        id="analyzeButton"
+        type="button"
+        class="w-full
+               py-4
+               rounded-lg
+               bg-[#007BA7]
+               hover:bg-[#006184]
+               text-white
+               font-semibold
+               text-base
+               shadow-sm
+               flex items-center
+               justify-center gap-3"
+      >
+
+        <span class="material-symbols-outlined">
+          auto_awesome
+        </span>
+
+        Analyze My Concern
+
+      </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         RIGHT COLUMN
+         ===================================================== -->
+
+    <div class="lg:col-span-7">
+
+
+      <div class="card p-6 md:p-7">
+
+
+        <!-- HEADER -->
+
+        <div
+          class="flex items-center
+                 justify-between
+                 border-b border-[#E2E8F0]
+                 pb-4"
+        >
+
+          <div class="flex items-center gap-3">
+
+            <div
+              class="w-10 h-10
+                     rounded-lg
+                     bg-[#EAF8FC]
+                     text-[#007BA7]
+                     flex items-center
+                     justify-center"
+            >
+
+              <span class="material-symbols-outlined">
+                psychiatry
+              </span>
+
+            </div>
+
+
+            <div>
+
+              <h2
+                class="text-xl
+                       text-[#1A1A1A]
+                       font-medium"
+              >
+                AI Medical Assistant
+              </h2>
+
+              <p
+                class="text-[11px]
+                       text-[#64748B]"
+              >
+                General medical information
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div
+            id="statusPill"
+            class="flex items-center
+                   gap-2
+                   px-3
+                   py-1.5
+                   rounded-full
+                   bg-[#ECFDF9]
+                   border border-[#B8ECE1]"
+          >
+
+            <span
+              id="statusDot"
+              class="w-2 h-2
+                     rounded-full
+                     bg-[#008577]"
+            ></span>
+
+            <span
+              id="analysisStatus"
+              class="text-xs
+                     text-[#008577]
+                     font-semibold"
+            >
+              Ready
+            </span>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- YOUR MESSAGE -->
+
+        <div class="mt-6">
+
+          <h3
+            class="text-[11px]
+                   text-[#64748B]
+                   uppercase
+                   tracking-[.12em]
+                   font-semibold
+                   mb-2"
+          >
+            Your Message
+          </h3>
+
+
+          <div
+            id="transcript"
+            aria-live="polite"
+            class="min-h-[96px]
+                   rounded-lg
+                   border border-[#E2E8F0]
+                   bg-[#FBFCFD]
+                   p-4
+                   text-sm
+                   leading-6
+                   text-[#475569]"
+          >
+            Record or upload your voice message to begin.
+          </div>
+
+        </div>
+
+
+
+        <!-- IMAGE OBSERVATIONS -->
+
+        <div
+          class="mt-6
+                 border-t border-[#E2E8F0]
+                 pt-5"
+        >
+
+          <h3
+            class="text-[11px]
+                   text-[#64748B]
+                   uppercase
+                   tracking-[.12em]
+                   font-semibold
+                   mb-2"
+          >
+            Image Observations
+          </h3>
+
+
+          <div class="flex gap-4">
+
+
+            <div
+              class="w-24 h-24
+                     rounded-lg
+                     overflow-hidden
+                     border border-[#E2E8F0]
+                     bg-[#F8FAFC]
+                     shrink-0"
+            >
+
+              <img
+                id="imageResultPreview"
+                class="hidden w-full h-full object-cover"
+                alt="Image used in analysis"
+              >
+
+
+              <div
+                id="imageResultPlaceholder"
+                class="w-full h-full
+                       flex items-center
+                       justify-center
+                       text-[#94A3B8]"
+              >
+
+                <span class="material-symbols-outlined text-[28px]">
+                  image
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <ul
+              id="imageObservations"
+              class="flex-1
+                     min-h-[96px]
+                     rounded-lg
+                     border border-[#E2E8F0]
+                     bg-[#FBFCFD]
+                     p-3
+                     text-[13px]
+                     leading-6
+                     text-[#475569]
+                     list-disc
+                     list-inside"
+            >
+
+              <li>
+                No image submitted with this request.
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- DOCTOR RESPONSE -->
+
+        <div
+          class="mt-6
+                 border-t border-[#E2E8F0]
+                 pt-5"
+        >
+
+          <h3
+            class="text-[11px]
+                   text-[#64748B]
+                   uppercase
+                   tracking-[.12em]
+                   font-semibold
+                   mb-2"
+          >
+            General Health Information
+          </h3>
+
+
+          <div
+            id="doctorResponse"
+            aria-live="polite"
+            class="min-h-[220px]
+                   rounded-lg
+                   border border-[#E2E8F0]
+                   bg-[#FBFCFD]
+                   p-4
+                   text-sm
+                   leading-7
+                   text-[#1A1A1A]"
+          >
+            Your AI medical-information response
+            will appear here after analysis.
+          </div>
+
+        </div>
+
+
+
+        <!-- AI VOICE RESPONSE -->
+
+        <div
+          class="mt-6
+                 border-t border-[#E2E8F0]
+                 pt-5"
+        >
+
+          <h3
+            class="text-[11px]
+                   text-[#64748B]
+                   uppercase
+                   tracking-[.12em]
+                   font-semibold
+                   mb-2"
+          >
+            AI Voice Response
+          </h3>
+
+
+          <div
+            class="rounded-lg
+                   border border-[#E2E8F0]
+                   bg-[#FBFCFD]
+                   p-4
+                   flex items-center gap-4"
+          >
+
+            <button
+              id="audioPlayButton"
+              type="button"
+              disabled
+              class="w-11 h-11
+                     rounded-full
+                     bg-[#007BA7]
+                     hover:bg-[#006184]
+                     text-white
+                     flex items-center
+                     justify-center
+                     disabled:opacity-40
+                     disabled:cursor-not-allowed"
+            >
+
+              <span
+                id="audioPlayIcon"
+                class="material-symbols-outlined"
+              >
+                play_arrow
+              </span>
+
+            </button>
+
+
+            <div class="flex-1">
+
+              <div
+                class="text-xs
+                       font-medium
+                       text-[#1A1A1A]"
+              >
+                Doctor's Voice
+              </div>
+
+
+              <div
+                class="mt-2
+                       flex items-center
+                       gap-1
+                       h-5"
+              >
+
+                <span class="w-1 bg-[#007BA7] h-2 rounded-full"></span>
+                <span class="w-1 bg-[#007BA7] h-4 rounded-full"></span>
+                <span class="w-1 bg-[#007BA7] h-3 rounded-full"></span>
+                <span class="w-1 bg-[#007BA7] h-5 rounded-full"></span>
+                <span class="w-1 bg-[#007BA7] h-6 rounded-full"></span>
+                <span class="w-1 bg-[#CBD5E1] h-3 rounded-full"></span>
+                <span class="w-1 bg-[#CBD5E1] h-4 rounded-full"></span>
+                <span class="w-1 bg-[#CBD5E1] h-2 rounded-full"></span>
+
+              </div>
+
+            </div>
+
+
+            <span
+              id="audioDuration"
+              class="text-[11px]
+                     text-[#64748B]"
+            >
+              0:00 / 0:00
+            </span>
+
+
+            <audio
+              id="responseAudio"
+              preload="metadata"
+              class="hidden"
+            ></audio>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- DISCLAIMER -->
+
+  <section
+    class="mt-6
+           border border-[#D8E8F5]
+           bg-white
+           rounded-lg
+           px-4 py-3
+           text-xs
+           leading-5
+           text-[#64748B]"
+  >
+
+    <strong class="text-[#1A1A1A]">
+      Important:
+    </strong>
+
+    This tool provides general health information and is not a substitute
+    for professional diagnosis, treatment, or medical advice. Consult a
+    qualified healthcare professional for persistent, severe, or concerning symptoms.
+
+  </section>
+
+</main>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+(() => {
+
+  const recordButton =
+    document.getElementById("recordButton");
+
+  const recordIcon =
+    document.getElementById("recordIcon");
+
+  const recordStatus =
+    document.getElementById("recordStatus");
+
+  const recordTimer =
+    document.getElementById("recordTimer");
+
+  const audioInput =
+    document.getElementById("audioInput");
+
+  const audioUploadButton =
+    document.getElementById("audioUploadButton");
+
+  const patientAudioPreview =
+    document.getElementById("patientAudioPreview");
+
+
+  const imageInput =
+    document.getElementById("imageInput");
+
+  const imageDropzone =
+    document.getElementById("imageDropzone");
+
+  const imageUploadLabel =
+    document.getElementById("imageUploadLabel");
+
+  const imagePreviewWrap =
+    document.getElementById("imagePreviewWrap");
+
+  const imagePreview =
+    document.getElementById("imagePreview");
+
+  const imageResultPreview =
+    document.getElementById("imageResultPreview");
+
+  const imageResultPlaceholder =
+    document.getElementById("imageResultPlaceholder");
+
+  const removeImageButton =
+    document.getElementById("removeImageButton");
+
+  const takePhotoButton =
+    document.getElementById("takePhotoButton");
+
+
+  const analyzeButton =
+    document.getElementById("analyzeButton");
+
+  const analysisStatus =
+    document.getElementById("analysisStatus");
+
+  const statusDot =
+    document.getElementById("statusDot");
+
+  const statusPill =
+    document.getElementById("statusPill");
+
+  const transcript =
+    document.getElementById("transcript");
+
+  const imageObservations =
+    document.getElementById("imageObservations");
+
+  const doctorResponse =
+    document.getElementById("doctorResponse");
+
+
+  const responseAudio =
+    document.getElementById("responseAudio");
+
+  const audioPlayButton =
+    document.getElementById("audioPlayButton");
+
+  const audioPlayIcon =
+    document.getElementById("audioPlayIcon");
+
+  const audioDuration =
+    document.getElementById("audioDuration");
+
+
+  const files = {
+    audio: null,
+    image: null
+  };
+
+
+  let recorder = null;
+
+  let stream = null;
+
+  let timer = null;
+
+  let startedAt = 0;
+
+  let imageUrl = null;
+
+
+
+  function formatTime(seconds) {
+
+    if (!Number.isFinite(seconds)) {
+      return "0:00";
+    }
+
+    const minutes =
+      Math.floor(seconds / 60);
+
+    const remaining =
+      Math.floor(seconds % 60)
+        .toString()
+        .padStart(2, "0");
+
+    return `${minutes}:${remaining}`;
+
+  }
+
+
+
+  function setStatus(message, state = "ready") {
+
+    const palette = {
+
+      ready: [
+        "#008577",
+        "#ECFDF9",
+        "#B8ECE1"
+      ],
+
+      loading: [
+        "#B45309",
+        "#FFF7ED",
+        "#FED7AA"
+      ],
+
+      success: [
+        "#008577",
+        "#ECFDF9",
+        "#B8ECE1"
+      ],
+
+      error: [
+        "#BA1A1A",
+        "#FFF1F2",
+        "#FECDD3"
+      ]
+
+    };
+
+
+    const [
+      color,
+      background,
+      border
+    ] =
+      palette[state] ||
+      palette.ready;
+
+
+    statusDot.style.backgroundColor =
+      color;
+
+    analysisStatus.style.color =
+      color;
+
+    analysisStatus.textContent =
+      message;
+
+    statusPill.style.backgroundColor =
+      background;
+
+    statusPill.style.borderColor =
+      border;
+
+  }
+
+
+
+  function startTimer() {
+
+    startedAt =
+      Date.now();
+
+    recordTimer.textContent =
+      "00:00";
+
+
+    timer =
+      setInterval(() => {
+
+        const elapsed =
+          (Date.now() - startedAt) / 1000;
+
+        recordTimer.textContent =
+          formatTime(elapsed);
+
+      }, 250);
+
+  }
+
+
+
+  function stopTimer() {
+
+    clearInterval(timer);
+
+    timer = null;
+
+  }
+
+
+
+  function selectAudio(file) {
+
+    if (!file) {
+      return;
+    }
+
+
+    files.audio =
+      file;
+
+
+    recordStatus.textContent =
+      `Audio ready: ${file.name}`;
+
+
+    recordIcon.textContent =
+      "check_circle";
+
+
+    patientAudioPreview.src =
+      URL.createObjectURL(file);
+
+
+    patientAudioPreview.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+
+  function selectImage(file) {
+
+    if (!file) {
+      return;
+    }
+
+
+    files.image =
+      file;
+
+
+    imageUploadLabel.textContent =
+      `Selected: ${file.name}`;
+
+
+    if (imageUrl) {
+      URL.revokeObjectURL(imageUrl);
+    }
+
+
+    imageUrl =
+      URL.createObjectURL(file);
+
+
+    imagePreview.src =
+      imageUrl;
+
+
+    imagePreviewWrap.classList.remove(
+      "hidden"
+    );
+
+
+    imageResultPreview.src =
+      imageUrl;
+
+
+    imageResultPreview.classList.remove(
+      "hidden"
+    );
+
+
+    imageResultPlaceholder.classList.add(
+      "hidden"
+    );
+
+
+    imageObservations.innerHTML =
+      "<li>Image selected and ready for AI review.</li>";
+
+  }
+
+
+
+  function attachDropzone(
+    dropzone,
+    input,
+    handler
+  ) {
+
+    dropzone.addEventListener(
+      "click",
+      () => input.click()
+    );
+
+
+    dropzone.addEventListener(
+      "keydown",
+      (event) => {
+
+        if (
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+
+          event.preventDefault();
+
+          input.click();
+
+        }
+
+      }
+    );
+
+
+    dropzone.addEventListener(
+      "dragover",
+      (event) => {
+
+        event.preventDefault();
+
+        dropzone.classList.add(
+          "dragging"
+        );
+
+      }
+    );
+
+
+    dropzone.addEventListener(
+      "dragleave",
+      () => {
+
+        dropzone.classList.remove(
+          "dragging"
+        );
+
+      }
+    );
+
+
+    dropzone.addEventListener(
+      "drop",
+      (event) => {
+
+        event.preventDefault();
+
+        dropzone.classList.remove(
+          "dragging"
+        );
+
+
+        const file =
+          event.dataTransfer.files[0];
+
+
+        handler(file);
+
+      }
+    );
+
+
+    input.addEventListener(
+      "change",
+      () => {
+
+        handler(input.files[0]);
+
+      }
+    );
+
+  }
+
+
+
+  audioUploadButton.addEventListener(
+    "click",
+    () => audioInput.click()
+  );
+
+
+  audioInput.addEventListener(
+    "change",
+    () =>
+      selectAudio(
+        audioInput.files[0]
+      )
+  );
+
+
+  attachDropzone(
+    imageDropzone,
+    imageInput,
+    selectImage
+  );
+
+
+
+  removeImageButton.addEventListener(
+    "click",
+    () => {
+
+      files.image = null;
+
+      imageInput.value = "";
+
+      imagePreviewWrap.classList.add(
+        "hidden"
+      );
+
+      imagePreview.src = "";
+
+      imageResultPreview.classList.add(
+        "hidden"
+      );
+
+      imageResultPreview.src = "";
+
+      imageResultPlaceholder.classList.remove(
+        "hidden"
+      );
+
+      imageUploadLabel.textContent =
+        "Drag and drop or click to upload";
+
+      imageObservations.innerHTML =
+        "<li>No image submitted with this request.</li>";
+
+    }
+  );
+
+
+
+  takePhotoButton.addEventListener(
+    "click",
+    () => {
+
+      imageInput.setAttribute(
+        "capture",
+        "environment"
+      );
+
+      imageInput.click();
+
+      setTimeout(
+        () =>
+          imageInput.removeAttribute(
+            "capture"
+          ),
+        100
+      );
+
+    }
+  );
+
+
+
+  recordButton.addEventListener(
+    "click",
+    async () => {
+
+      if (
+        recorder &&
+        recorder.state === "recording"
+      ) {
+
+        recorder.stop();
+
+        return;
+
+      }
+
+
+      if (
+        !navigator.mediaDevices?.getUserMedia ||
+        !window.MediaRecorder
+      ) {
+
+        recordStatus.textContent =
+          "Recording is not supported here. Please upload audio.";
+
+        return;
+
+      }
+
+
+      try {
+
+        stream =
+          await navigator.mediaDevices.getUserMedia({
+            audio: true
+          });
+
+
+        const mimeType =
+          MediaRecorder.isTypeSupported(
+            "audio/webm;codecs=opus"
+          )
+            ? "audio/webm;codecs=opus"
+            : "";
+
+
+        recorder =
+          new MediaRecorder(
+            stream,
+            mimeType
+              ? { mimeType }
+              : undefined
+          );
+
+
+        const chunks = [];
+
+
+        recorder.addEventListener(
+          "dataavailable",
+          (event) => {
+
+            if (event.data.size) {
+              chunks.push(event.data);
+            }
+
+          }
+        );
+
+
+        recorder.addEventListener(
+          "stop",
+          () => {
+
+            const type =
+              recorder.mimeType ||
+              "audio/webm";
+
+
+            selectAudio(
+              new File(
+                chunks,
+                "patient-voice.webm",
+                { type }
+              )
+            );
+
+
+            stream
+              .getTracks()
+              .forEach(
+                track =>
+                  track.stop()
+              );
+
+
+            recordButton.classList.remove(
+              "recording"
+            );
+
+
+            recordIcon.classList.remove(
+              "pulse"
+            );
+
+
+            recordIcon.textContent =
+              "check_circle";
+
+
+            recordStatus.textContent =
+              "Recording ready to analyze";
+
+
+            stopTimer();
+
+          }
+        );
+
+
+        recorder.start();
+
+
+        recordButton.classList.add(
+          "recording"
+        );
+
+
+        recordIcon.classList.add(
+          "pulse"
+        );
+
+
+        recordIcon.textContent =
+          "stop";
+
+
+        recordStatus.textContent =
+          "Recording… click again to stop";
+
+
+        startTimer();
+
+      } catch (error) {
+
+        recordStatus.textContent =
+          "Microphone access unavailable. Please upload an audio file.";
+
+      }
+
+    }
+  );
+
+
+
+  responseAudio.addEventListener(
+    "loadedmetadata",
+    () => {
+
+      audioDuration.textContent =
+        `0:00 / ${formatTime(
+          responseAudio.duration
+        )}`;
+
+    }
+  );
+
+
+  responseAudio.addEventListener(
+    "timeupdate",
+    () => {
+
+      audioDuration.textContent =
+        `${formatTime(
+          responseAudio.currentTime
+        )} / ${formatTime(
+          responseAudio.duration
+        )}`;
+
+    }
+  );
+
+
+  responseAudio.addEventListener(
+    "play",
+    () => {
+
+      audioPlayIcon.textContent =
+        "pause";
+
+    }
+  );
+
+
+  responseAudio.addEventListener(
+    "pause",
+    () => {
+
+      audioPlayIcon.textContent =
+        "play_arrow";
+
+    }
+  );
+
+
+  responseAudio.addEventListener(
+    "ended",
+    () => {
+
+      audioPlayIcon.textContent =
+        "play_arrow";
+
+    }
+  );
+
+
+  audioPlayButton.addEventListener(
+    "click",
+    async () => {
+
+      if (!responseAudio.src) {
+        return;
+      }
+
+
+      if (responseAudio.paused) {
+
+        try {
+
+          await responseAudio.play();
+
+        } catch (error) {
+
+          console.error(
+            "Audio playback failed:",
+            error
+          );
+
+        }
+
+      } else {
+
+        responseAudio.pause();
+
+      }
+
+    }
+  );
+
+
+
+  analyzeButton.addEventListener(
+    "click",
+    async () => {
+
+      if (!files.audio) {
+
+        setStatus(
+          "Voice message required",
+          "error"
+        );
+
+
+        recordStatus.textContent =
+          "Please record or upload an audio message first.";
+
+        return;
+
+      }
+
+
+      const formData =
+        new FormData();
+
+
+      formData.append(
+        "audio",
+        files.audio
+      );
+
+
+      if (files.image) {
+
+        formData.append(
+          "image",
+          files.image
+        );
+
+      }
+
+
+      analyzeButton.disabled =
+        true;
+
+
+      analyzeButton.innerHTML =
+        '<span class="material-symbols-outlined spin">progress_activity</span> Analyzing…';
+
+
+      setStatus(
+        "Analyzing",
+        "loading"
+      );
+
+
+      transcript.textContent =
+        "Processing your voice message…";
+
+
+      doctorResponse.textContent =
+        "Your voice and selected image are being processed.";
+
+
+      imageObservations.innerHTML =
+        files.image
+          ? "<li>Image is being included in the AI review.</li>"
+          : "<li>No image submitted with this request.</li>";
+
+
+      try {
+
+        const response =
+          await fetch(
+            "/api/analyze",
+            {
+              method: "POST",
+              body: formData
+            }
+          );
+
+
+        let data;
+
+
+        try {
+
+          data =
+            await response.json();
+
+        } catch {
+
+          throw new Error(
+            `Server returned an invalid response (${response.status}).`
+          );
+
+        }
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.detail ||
+            "Analysis request failed."
+          );
+
+        }
+
+
+        transcript.textContent =
+          data.transcript
+            ? `“${data.transcript}”`
+            : "No transcription was returned.";
+
+
+        doctorResponse.textContent =
+          data.response ||
+          "No response was returned.";
+
+
+        imageObservations.innerHTML =
+          files.image
+            ? "<li>The selected image was included in the AI review.</li>"
+            : "<li>No image was submitted with this request.</li>";
+
+
+        responseAudio.src =
+          `${data.audio_url}?v=${Date.now()}`;
+
+
+        responseAudio.load();
+
+
+        audioPlayButton.disabled =
+          false;
+
+
+        setStatus(
+          "Analysis complete",
+          "success"
+        );
+
+
+        // Automatically play after the Analyze click.
+        try {
+
+          await responseAudio.play();
+
+        } catch {
+
+          // Browser autoplay policy may block it.
+          audioPlayIcon.textContent =
+            "play_arrow";
+
+        }
+
+      } catch (error) {
+
+        doctorResponse.textContent =
+          error instanceof Error
+            ? error.message
+            : "Analysis request failed.";
+
+
+        setStatus(
+          "Analysis unavailable",
+          "error"
+        );
+
+
+        audioPlayButton.disabled =
+          true;
+
+      } finally {
+
+        analyzeButton.disabled =
+          false;
+
+
+        analyzeButton.innerHTML =
+          '<span class="material-symbols-outlined">auto_awesome</span> Analyze My Concern';
+
+      }
+
+    }
+  );
+
+})();
+</script>
+
+</body>
+</html>
