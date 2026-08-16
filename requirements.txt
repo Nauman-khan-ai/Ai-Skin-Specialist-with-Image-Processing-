@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-dotenv
+groq
+deepgram-sdk
+SpeechRecognition
+PyAudio
+pydub
+python-multipart 
